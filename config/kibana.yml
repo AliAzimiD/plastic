@@ -8,7 +8,7 @@ elasticsearch.ssl.verificationMode: "none"
 
 # ─── Plug the “random key” warnings ───────────────────────────────
 xpack.security.encryptionKey: "aK3yThatIs32CharsLong1234567890"
-xpack.encryptedSavedObjects.encryptionKey: "32CharactersLongSoPickAnything!"
+xpack.encryptedSavedObjects.encryptionKey: "32CharactersLongSoPickAnything!!"
 xpack.reporting.encryptionKey: "another32charLongEncryptionKey!!!"
 
 # ─── Silence doc‑link task that spams ERROR on bad HTML ───────────

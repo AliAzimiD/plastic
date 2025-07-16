@@ -9,7 +9,6 @@ services:
       - cluster.name=docker-cluster
       - discovery.seed_hosts=es02  # Inform ES01 about ES02
       - cluster.initial_master_nodes=es01,es02
-      - discovery.type=zen-disco  # Zen Discovery for multi-node discovery
       - xpack.security.enabled=true
       - ELASTIC_PASSWORD=${ELASTIC_PWD:-Changeme1}
       - KIBANA_PASSWORD=${KIBANA_PASSWORD:-Changeme1}
@@ -32,7 +31,6 @@ services:
       - cluster.name=docker-cluster
       - discovery.seed_hosts=es01  # Inform ES02 about ES01
       - cluster.initial_master_nodes=es01,es02
-      - discovery.type=zen-disco  # Zen Discovery for multi-node discovery
       - xpack.security.enabled=true
       - ELASTIC_PASSWORD=${ELASTIC_PWD:-Changeme1}
       - KIBANA_PASSWORD=${KIBANA_PASSWORD:-Changeme1}
