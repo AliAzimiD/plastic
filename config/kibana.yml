@@ -7,7 +7,7 @@ elasticsearch.password: "${KIBANA_PASSWORD}"
 elasticsearch.ssl.verificationMode: "none"
 
 # ─── Plug the “random key” warnings ───────────────────────────────
-xpack.security.encryptionKey: "aK3yThatIs32CharsLong1234567890"
+xpack.security.encryptionKey: "aK3yThatIs32CharsLong1234567890X"
 xpack.encryptedSavedObjects.encryptionKey: "32CharactersLongSoPickAnything!!"
 xpack.reporting.encryptionKey: "another32charLongEncryptionKey!!!"
 
