@@ -1,0 +1,72 @@
+version: "3.8"
+
+services:
+  elasticsearch:
+    image: docker.io/library/elasticsearch:8.18.0
+    container_name: es01
+    environment:
+      - node.name=es01
+      - cluster.name=docker-cluster
+      - discovery.seed_hosts=es02  # Inform ES01 about ES02
+      - cluster.initial_master_nodes=es01,es02
+      - discovery.type=zen-disco  # Zen Discovery for multi-node discovery
+      - xpack.security.enabled=true
+      - ELASTIC_PASSWORD=${ELASTIC_PWD:-Changeme1}
+      - KIBANA_PASSWORD=${KIBANA_PWD:-Changeme1}
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g
+    ulimits:
+      memlock: { soft: -1, hard: -1 }
+      nofile:  { soft: 65536, hard: 65536 }
+    ports:
+      - "9200:9200"
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    networks:
+      - elastic
+
+  es02:
+    image: docker.io/library/elasticsearch:8.18.0
+    container_name: es02
+    environment:
+      - node.name=es02
+      - cluster.name=docker-cluster
+      - discovery.seed_hosts=es01  # Inform ES02 about ES01
+      - cluster.initial_master_nodes=es01,es02
+      - discovery.type=zen-disco  # Zen Discovery for multi-node discovery
+      - xpack.security.enabled=true
+      - ELASTIC_PASSWORD=${ELASTIC_PWD:-Changeme1}
+      - KIBANA_PASSWORD=${KIBANA_PWD:-Changeme1}
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g
+    ulimits:
+      memlock: { soft: -1, hard: -1 }
+      nofile:  { soft: 65536, hard: 65536 }
+    ports:
+      - "9201:9200"  # Expose the 2nd node on a different port (9201)
+    volumes:
+      - esdata2:/usr/share/elasticsearch/data
+    networks:
+      - elastic
+
+  kibana:
+    image: docker.io/library/kibana:8.18.0
+    container_name: kib01
+    depends_on: 
+      - elasticsearch
+    ports: 
+      - "5601:5601"
+    volumes:
+      - ./config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro  # Ensure kibana.yml is correctly mounted
+    networks:
+      - elastic
+    healthcheck:
+      test: ["CMD-SHELL","curl -sf http://localhost:5601/api/status | grep -q '\"state\":\"green\"'"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+volumes:
+  esdata: {}
+  esdata2: {}
+
+networks:
+  elastic: {}
