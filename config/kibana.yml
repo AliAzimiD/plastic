@@ -1,7 +1,7 @@
 # ─── Core connection ──────────────────────────────────────────────
 elasticsearch.hosts: ["http://es01:9200"]
-elasticsearch.username: "kibana_system"
-elasticsearch.password: "${KIBANA_PASSWORD}"
+# elasticsearch.username: "kibana_system"
+# elasticsearch.password: "${KIBANA_PASSWORD}"
 
 # ─── Disable TLS verification because ES is HTTP in dev ───────────
 elasticsearch.ssl.verificationMode: "none"
@@ -12,13 +12,12 @@ xpack.encryptedSavedObjects.encryptionKey: "32CharactersLongSoPickAnything!!"
 xpack.reporting.encryptionKey: "another32charLongEncryptionKey!!!"
 
 # ─── Silence doc‑link task that spams ERROR on bad HTML ───────────
-xpack.product_docs.enabled: false
 
 # ─── Turn off Fleet if you’re offline or don’t use it ─────────────
 xpack.fleet.agents.enabled: false
 xpack.fleet.packages: []
 
-# ─── Misc dev niceties ────────────────────────────────────────────S
+# ─── Misc dev niceties ────────────────────────────────────────────
 server.host: "0.0.0.0"
 server.shutdownTimeout: "5s"
 logging.root.level: info
